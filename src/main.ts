@@ -11,6 +11,13 @@ Quat.fromEuler(node1._lrot, 0, 0, 30);
 node1._dirtyFlags = TransformBit.ROTATION;
 node2._dirtyFlags = TransformBit.RS;
 node1.updateWorldTransform();
-setTimeout(() => {
-  document.body.innerText = JSON.stringify(node1, null, 2);
-});
+
+const func = () => {
+  console.log('start');
+  const canvas: any = document.getElementById('canvas');
+  const gl = canvas.getContext('webgl');
+  gl.clearColor(0, 0, 0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+};
+
+setTimeout(func, 1000);

@@ -26,6 +26,7 @@
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.node.json",
     "build:watch": "tsc -w -p tsconfig.node.json",
+    "h5:watch":"webpack serve --allowed-hosts auto",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
