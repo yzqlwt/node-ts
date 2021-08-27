@@ -1,32 +1,16 @@
-/**
- * Some predefined delay values (in milliseconds).
- */
-export enum Delays {
-  Short = 500,
-  Medium = 2000,
-  Long = 5000,
-}
+import Node, { TransformBit } from './node';
+import Quat from './quat';
 
-/**
- * Returns a Promise<string> that resolves after a given time.
- *
- * @param {string} name - A name.
- * @param {number=} [delay=Delays.Medium] - A number of milliseconds to delay resolution of the Promise.
- * @returns {Promise<string>}
- */
-function delayedHello(
-  name: string,
-  delay: number = Delays.Medium,
-): Promise<string> {
-  return new Promise((resolve: (value?: string) => void) =>
-    setTimeout(() => resolve(`Hello, ${name}`), delay),
-  );
-}
-
-// Below are examples of using ESLint errors suppression
-// Here it is suppressing a missing return type definition for the greeter function.
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function greeter(name: string) {
-  return await delayedHello(name, Delays.Long);
-}
+const node1 = new Node();
+const node2 = new Node();
+node1._parent = node2;
+node2._lscale.x = 2;
+node2._lscale.y = 2;
+Quat.fromEuler(node2._lrot, 0, 0, 30);
+Quat.fromEuler(node1._lrot, 0, 0, 30);
+node1._dirtyFlags = TransformBit.ROTATION;
+node2._dirtyFlags = TransformBit.RS;
+node1.updateWorldTransform();
+setTimeout(() => {
+  document.body.innerText = JSON.stringify(node1, null, 2);
+});
